@@ -7,6 +7,7 @@ function Register() {
     userId: '',
     password: '',
     confirmPassword: '',
+    name: '',
     phone: ''
   });
   const [error, setError] = useState('');
@@ -29,6 +30,10 @@ function Register() {
       setError('올바른 휴대폰 번호를 입력해주세요.');
       return false;
     }
+    if (!formData.name.trim()) {
+      setError('이름을 입력해주세요.');
+      return false;
+    }
     return true;
   };
 
@@ -37,14 +42,16 @@ function Register() {
     if (!validateForm()) return;
 
     try {
-      await api.post('/auth/register', {
+      await api.post('/api/auth/register', {
         userId: formData.userId,
         password: formData.password,
+        name: formData.name,
         phone: formData.phone
       });
       navigate('/login');
     } catch (err) {
-      setError('회원가입에 실패했습니다. 다시 시도해주세요.');
+      console.error('회원가입 에러:', err.response?.data);
+      setError(err.response?.data?.message || '회원가입에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -61,6 +68,18 @@ function Register() {
             value={formData.userId}
             onChange={handleChange}
             required
+            autoComplete="off"
+          />
+        </div>
+        <div className="form-group">
+          <label>이름:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            autoComplete="off"
           />
         </div>
         <div className="form-group">
@@ -71,6 +90,7 @@ function Register() {
             value={formData.password}
             onChange={handleChange}
             required
+            autoComplete="off"
           />
         </div>
         <div className="form-group">
@@ -81,6 +101,7 @@ function Register() {
             value={formData.confirmPassword}
             onChange={handleChange}
             required
+            autoComplete="off"
           />
         </div>
         <div className="form-group">
@@ -92,6 +113,7 @@ function Register() {
             onChange={handleChange}
             placeholder="'-' 없이 입력해주세요"
             required
+            autoComplete="off"
           />
         </div>
         <button type="submit">회원가입</button>

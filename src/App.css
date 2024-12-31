@@ -213,3 +213,115 @@ button:hover {
     display: none;
   }
 }
+
+/* 게시판 스타일 */
+.board-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-content {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.board-table th,
+.board-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.board-table th {
+  background-color: #F0F8FF;
+  color: #2c3e50;
+}
+
+.board-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.board-table tbody tr:hover {
+  background-color: #F8FFFF;
+}
+
+.write-btn {
+  max-width: 120px;
+  margin-left: auto;
+  display: block;
+}
+
+/* 게시글 상세 스타일 */
+.post-detail {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+.post-info {
+  margin: 1rem 0;
+  color: #666;
+}
+
+.post-info span {
+  margin-right: 1rem;
+}
+
+.post-content {
+  margin: 2rem 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.post-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/* 글쓰기 폼 스타일 */
+.write-form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.write-form textarea {
+  width: 100%;
+  min-height: 300px;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+}
+
+.cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+/* 작성자 입력 필드 스타일 */
+.author-input {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
