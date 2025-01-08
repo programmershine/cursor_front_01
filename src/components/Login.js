@@ -21,12 +21,32 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/auth/login', credentials);
-      const { token } = response.data;
-      sessionStorage.setItem('token', token);
-      navigate('/');
+      if (!credentials.password.trim()) {
+        setError('비밀번호를 입력해주세요.');
+        return;
+      }
+
+      const loginData = {
+        userId: credentials.userId,
+        password: credentials.password
+      };
+
+      const response = await api.post('/api/auth/login', loginData);
+      
+      if (response.data && response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userId', credentials.userId);
+        navigate('/');
+      } else {
+        setError('로그인 응답 데이터가 올바르지 않습니다.');
+      }
     } catch (err) {
-      setError('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
+      console.error('로그인 에러:', err.response || err);
+      if (err.response?.status === 403) {
+        setError('아이디 또는 비밀번호가 일치하지 않습니다.');
+      } else {
+        setError('로그인에 실패했습니다.');
+      }
     }
   };
 
@@ -43,6 +63,7 @@ function Login() {
             value={credentials.userId}
             onChange={handleChange}
             required
+            autoComplete="off"
           />
         </div>
         <div className="form-group">
@@ -53,6 +74,7 @@ function Login() {
             value={credentials.password}
             onChange={handleChange}
             required
+            autoComplete="off"
           />
         </div>
         <button type="submit">로그인</button>
